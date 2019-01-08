@@ -36,10 +36,19 @@ public class EmployeeRestController {
         return employee;
     }
 
+    /**
+     * 1. Set the id to the employee to 0, this makes sure we save the employee ... instead of update
+     * 2. Save,
+     * 3. then return
+     * @param theEmployee
+     */
     @PostMapping("/employees")
-    public void save(Employee theEmployee) {
+    public Employee save(@RequestBody Employee theEmployee) {
+        theEmployee.setId(0);
         employeeService.save(theEmployee);
+        return theEmployee;
     }
+
 //
 //    public void deleteById(int theId) {
 //        employeeService.deleteById(theId);
