@@ -49,8 +49,14 @@ public class EmployeeRestController {
         return theEmployee;
     }
 
-//
-//    public void deleteById(int theId) {
-//        employeeService.deleteById(theId);
-//    }
+    @PutMapping("/employees")
+    public Employee update(@RequestBody Employee theEmployee) {
+        employeeService.save(theEmployee);
+        return theEmployee;
+    }
+
+    @DeleteMapping("/employees/{employeeId}")
+    public void deleteById(@PathVariable int employeeId) {
+        employeeService.deleteById(employeeId);
+    }
 }
