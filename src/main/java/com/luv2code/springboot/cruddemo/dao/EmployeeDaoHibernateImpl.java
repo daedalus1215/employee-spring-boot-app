@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class EmployeeDaoHibernateImpl implements EmployeeDAO{
+public class EmployeeDaoHibernateImpl implements EmployeeDAO {
 
     // define field for entityManager
 
@@ -30,9 +30,7 @@ public class EmployeeDaoHibernateImpl implements EmployeeDAO{
     // Implemented methods
 
     @Override
-    @Transactional
     public List<Employee> findAll() {
-
         // get the current hibernate session
         Session currentSession = entityManager.unwrap(Session.class);
 
@@ -42,5 +40,23 @@ public class EmployeeDaoHibernateImpl implements EmployeeDAO{
 
         // execute query and get result list - then return
        return theQuery.getResultList();
+    }
+
+    @Override
+    public Employee findById(int theId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        return currentSession.get(Employee.class, theId);
+    }
+
+    @Override
+    public void save(Employee employee) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.saveOrUpdate(employee); // if id = 0, we will save; else id >= 1, we will do a update.
+    }
+
+    @Override
+    public void deleteById(int theId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.delete(this.findById(theId));
     }
 }
