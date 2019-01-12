@@ -26,13 +26,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
-    public Optional<Employee> findById(int theId) {
-        return employeeRepository.findById(theId);
+    public Employee findById(int theId) {
+        Optional<Employee> result = employeeRepository.findById(theId);
+
+        if (result.isPresent()) {
+            return result.get();
+        }
+
+        throw new RuntimeException("Did not find employee id - " + theId);
     }
 
     @Override
-    @Transactional
     public void save(Employee theEmployee) {
         employeeRepository.save(theEmployee);
     }
